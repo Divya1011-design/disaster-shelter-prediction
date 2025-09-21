@@ -26,18 +26,24 @@ year = st.sidebar.number_input("Year", min_value=1900, max_value=2100, value=202
 country = st.sidebar.text_input("Country", "India")
 
 disaster_group = st.sidebar.selectbox("Disaster Group", ["Natural", "Technological"])
-disaster_subgroup = st.sidebar.selectbox("Disaster Subgroup", 
-    ["Climatological", "Hydrological", "Geophysical", "Meteorological"])
-disaster_type = st.sidebar.selectbox("Disaster Type", 
-    ["Flood", "Storm", "Earthquake", "Drought", "Epidemic"])
-disaster_subtype = st.sidebar.selectbox("Disaster Subtype", 
-    ["Riverine flood", "Flash flood", "Tropical cyclone", "Heat wave", "Pandemic"])
+disaster_subgroup = st.sidebar.selectbox(
+    "Disaster Subgroup", 
+    ["Climatological", "Hydrological", "Geophysical", "Meteorological"]
+)
+disaster_type = st.sidebar.selectbox(
+    "Disaster Type", 
+    ["Flood", "Storm", "Earthquake", "Drought", "Epidemic"]
+)
+disaster_subtype = st.sidebar.selectbox(
+    "Disaster Subtype", 
+    ["Riverine flood", "Flash flood", "Tropical cyclone", "Heat wave", "Pandemic"]
+)
 
 total_events = st.sidebar.number_input("Total Events", min_value=1, value=1)
 total_deaths = st.sidebar.number_input("Total Deaths", min_value=0, value=0)
 total_damage = st.sidebar.number_input("Total Damage (USD, Adjusted)", min_value=0, value=0)
 
-st.markdown("###  Predict Shelter Demand")
+st.markdown("### Predict Shelter Demand")
 
 if st.button("📊 Predict"):
     # Prepare input
@@ -45,17 +51,16 @@ if st.button("📊 Predict"):
         "Year": year,
         "Country": country,
         "Disaster_Group": disaster_group,
-        "Disaster_Subgroup": disaster_subgroup,   # User input spelling
+        "Disaster_Subgroup": disaster_subgroup,
         "Disaster_Type": disaster_type,
         "Disaster_Subtype": disaster_subtype,
         "Total_Events": total_events,
-        "Total_Deaths": total_deaths
+        "Total_Deaths": total_deaths,
         "Total_Damage_USD_adjusted": total_damage
     }])
 
-  
-    # If the model was trained with typo 'Disaster_Subroup'
-    if "Disaster_Subroup" in model.feature_names_in_:
+    # Handle possible feature name typo in the model
+    if hasattr(model, "feature_names_in_") and "Disaster_Subroup" in model.feature_names_in_:
         input_data.rename(columns={"Disaster_Subgroup": "Disaster_Subroup"}, inplace=True)
 
     try:
