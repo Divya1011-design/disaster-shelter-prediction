@@ -1,0 +1,22 @@
+{
+  "numeric_features": [
+    "Year",
+    "Total_Events",
+    "Total_Deaths",
+    "Total_Damage_USD_adjusted"
+  ],
+  "categorical_features": [
+    "Country",
+    "Disaster_Group",
+    "Disaster_Subroup",
+    "Disaster_Type",
+    "Disaster_Subtype"
+  ],
+  "best_params": {
+    "n_estimators": 400,
+    "min_samples_split": 10,
+    "min_samples_leaf": 1,
+    "max_features": "sqrt",
+    "max_depth": null
+  }
+}
